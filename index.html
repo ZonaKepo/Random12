@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block Party Card Generator</title>
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --primary-color: #2563eb;
+            --text-color: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #counter {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #64748b;
+        }
+
+        #card {
+            width: 90%;
+            max-width: 400px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            min-height: 400px;
+            align-content: center;
+        }
+
+        .word-item {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+
+        button:active {
+            transform: scale(0.95);
+            background-color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="counter">1 of 3</div>
+
+    <div id="card">
+        </div>
+
+    <button onclick="shuffleCard()">ACAK KARTU</button>
+
+    <script>
+        // Data kartu yang bisa kamu tambah atau edit nanti
+        const allCards = [
+            ["Meja", "Kursi", "Lampu", "Kucing", "Anjing", "Ayam", "Pisang", "Mangga", "Jeruk", "Buku", "Sepeda", "Payung"],
+            ["Lemari", "Kipas Angin", "Televisi", "Gajah", "Burung", "Ikan", "Semangka", "Rambutan", "Durian", "Tas", "Sepatu", "Topi"],
+            ["Piring", "Gelas", "Sendok", "Sapi", "Kambing", "Kelinci", "Monyet", "Salak", "Manggis", "Nanas", "Kunci", "Bantal"]
+        ];
+
+        let currentIndex = 0;
+
+        function displayCard(index) {
+            const cardContainer = document.getElementById('card');
+            const counter = document.getElementById('counter');
+            
+            // Update counter text
+            counter.innerText = `${index + 1} of ${allCards.length}`;
+            
+            // Clear and fill card
+            cardContainer.innerHTML = "";
+            allCards[index].forEach(word => {
+                const div = document.createElement('div');
+                div.className = 'word-item';
+                div.innerText = word;
+                cardContainer.appendChild(div);
+            });
+        }
+
+        function shuffleCard() {
+            // Animasi sederhana: acak indeks yang berbeda dari sebelumnya
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * allCards.length);
+            } while (newIndex === currentIndex && allCards.length > 1);
+            
+            currentIndex = newIndex;
+            displayCard(currentIndex);
+        }
+
+        // Tampilkan kartu pertama saat load
+        displayCard(0);
+    </script>
+</body>
+</html>
