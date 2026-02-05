@@ -108,3 +108,50 @@
             ["Meja", "Kursi", "Lampu", "Kucing", "Anjing", "Ayam", "Pisang", "Mangga", "Jeruk", "Buku", "Sepeda", "Payung"],
             ["Lemari", "Kipas Angin", "Televisi", "Gajah", "Burung", "Ikan", "Semangka", "Rambutan", "Durian", "Tas", "Sepatu", "Topi"],
             ["Piring", "Gelas", "Sendok", "Sapi", "Kambing", "Kelinci", "Monyet", "Salak", "Manggis", "Nanas", "Kunci", "Bantal"],
+            ["Komputer", "Botol", "Sajadah", "Harimau", "Kuda", "Bebek", "Pepaya", "Melon", "Anggur", "Pena", "Motor", "Jaket"],
+            ["Radio", "Kamera", "Jam Tangan", "Singa", "Zebra", "Pinguin", "Sirsak", "Nangka", "Strawberry", "Kertas", "Mobil", "Helm"],
+            ["Kompor", "Kuali", "Garpu", "Beruang", "Rusa", "Kura-kura", "Alpukat", "Leci", "Kelapa", "Penggaris", "Becak", "Payung"],
+            ["Kulkas", "Setrika", "Telepon", "Serigala", "Unta", "Hamster", "Jambu", "Kesemek", "Markisa", "Kamus", "Bus", "Kacamata"],
+            ["Sapu", "Ember", "Handuk", "Landak", "Koala", "Kanguru", "Duku", "Sawo", "Pir", "Majalah", "Kereta", "Dompet"],
+            ["Panci", "Blender", "Cermin", "Panda", "Tupai", "Lumba-lumba", "Delima", "Matoa", "Cermai", "Novel", "Kapal", "Cincin"],
+            ["Mixer", "Oven", "Sikat Gigi", "Gorila", "Cendrawasih", "Lele", "Belimbing", "Kedondong", "Sukun", "Map", "Pesawat", "Kalung"]
+        ];
+
+        let currentIndex = 0;
+
+        function displayCard(index) {
+            const cardContainer = document.getElementById('card');
+            const counter = document.getElementById('counter');
+            
+            // Update nomor urut
+            counter.innerText = `${index + 1} OF ${allCards.length}`;
+            
+            // Update warna latar kartu secara acak dari palet pantone
+            const randomColor = cardColors[Math.floor(Math.random() * cardColors.length)];
+            cardContainer.style.backgroundColor = randomColor;
+            
+            // Bersihkan dan isi konten
+            cardContainer.innerHTML = "";
+            allCards[index].forEach(word => {
+                const div = document.createElement('div');
+                div.className = 'word-item';
+                div.innerText = word;
+                cardContainer.appendChild(div);
+            });
+        }
+
+        function shuffleCard() {
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * allCards.length);
+            } while (newIndex === currentIndex);
+            
+            currentIndex = newIndex;
+            displayCard(currentIndex);
+        }
+
+        // Jalankan kartu pertama kali
+        displayCard(0);
+    </script>
+</body>
+</html>
