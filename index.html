@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Block Party Card Generator</title>
+    <title>Block Party Card Generator - Colorful Edition</title>
     <style>
         :root {
-            --bg-color: #f0f2f5;
-            --card-bg: #ffffff;
-            --primary-color: #2563eb;
-            --text-color: #1e293b;
+            /* Latar belakang abu-abu gelap */
+            --bg-color: #2c2c2e; 
+            --text-dark: #1e293b;
+            --counter-color: #94a3b8;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -28,105 +27,84 @@
         #counter {
             font-size: 1.2rem;
             font-weight: bold;
-            margin-bottom: 15px;
-            color: #64748b;
+            margin-bottom: 20px;
+            color: var(--counter-color);
+            letter-spacing: 2px;
+        }
+
+        #card-frame {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
 
         #card {
-            width: 90%;
-            max-width: 400px;
-            background: var(--card-bg);
+            width: 85vw;
+            max-width: 380px;
+            min-height: 450px;
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            padding: 25px;
+            padding: 20px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            min-height: 400px;
+            gap: 12px;
             align-content: center;
+            transition: background-color 0.5s ease;
         }
 
         .word-item {
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px 10px;
+            border-radius: 12px;
             text-align: center;
-            font-weight: 600;
-            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
+            text-transform: uppercase;
         }
 
         button {
-            margin-top: 30px;
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            background-color: var(--primary-color);
-            color: white;
+            margin-top: 40px;
+            padding: 18px 50px;
+            font-size: 1rem;
+            font-weight: 800;
+            background-color: #ffffff;
+            color: #2c2c2e;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            transition: all 0.2s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            letter-spacing: 1px;
         }
 
         button:active {
-            transform: scale(0.95);
-            background-color: #1d4ed8;
+            transform: scale(0.92);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
         }
     </style>
 </head>
 <body>
 
-    <div id="counter">1 of 3</div>
+    <div id="counter">1 OF 10</div>
 
-    <div id="card">
-        </div>
+    <div id="card-frame">
+        <div id="card">
+            </div>
+    </div>
 
     <button onclick="shuffleCard()">ACAK KARTU</button>
 
     <script>
-        // Data kartu yang bisa kamu tambah atau edit nanti
+        // 5 Warna Soft Pantone yang akan bergantian setiap acak
+        const cardColors = ["#FFB7B2", "#B2E2F2", "#FDFD96", "#B2F2BB", "#E0BBE4"];
+
+        // 10 Kartu dengan masing-masing 12 kata unik (Total 120 kata berbeda)
         const allCards = [
             ["Meja", "Kursi", "Lampu", "Kucing", "Anjing", "Ayam", "Pisang", "Mangga", "Jeruk", "Buku", "Sepeda", "Payung"],
             ["Lemari", "Kipas Angin", "Televisi", "Gajah", "Burung", "Ikan", "Semangka", "Rambutan", "Durian", "Tas", "Sepatu", "Topi"],
-            ["Piring", "Gelas", "Sendok", "Sapi", "Kambing", "Kelinci", "Monyet", "Salak", "Manggis", "Nanas", "Kunci", "Bantal"]
-        ];
-
-        let currentIndex = 0;
-
-        function displayCard(index) {
-            const cardContainer = document.getElementById('card');
-            const counter = document.getElementById('counter');
-            
-            // Update counter text
-            counter.innerText = `${index + 1} of ${allCards.length}`;
-            
-            // Clear and fill card
-            cardContainer.innerHTML = "";
-            allCards[index].forEach(word => {
-                const div = document.createElement('div');
-                div.className = 'word-item';
-                div.innerText = word;
-                cardContainer.appendChild(div);
-            });
-        }
-
-        function shuffleCard() {
-            // Animasi sederhana: acak indeks yang berbeda dari sebelumnya
-            let newIndex;
-            do {
-                newIndex = Math.floor(Math.random() * allCards.length);
-            } while (newIndex === currentIndex && allCards.length > 1);
-            
-            currentIndex = newIndex;
-            displayCard(currentIndex);
-        }
-
-        // Tampilkan kartu pertama saat load
-        displayCard(0);
-    </script>
-</body>
-</html>
+            ["Piring", "Gelas", "Sendok", "Sapi", "Kambing", "Kelinci", "Monyet", "Salak", "Manggis", "Nanas", "Kunci", "Bantal"],
